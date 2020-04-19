@@ -1,5 +1,7 @@
 import React from 'react'
+{{#if generateCss}}
 import './{{fileCase component}}.{{cssExtension}}'
+{{/if}}
 
 export class {{classCase component}} extends React.Component {
     constructor(props) {

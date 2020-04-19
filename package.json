@@ -19,7 +19,7 @@
     "generator"
   ],
   "bin": {
-    "new": "./bin/index.js"
+    "plop-react": "./bin/index.js"
   },
   "scripts": {
     "postinstall": "node ./bin/add-config.js"

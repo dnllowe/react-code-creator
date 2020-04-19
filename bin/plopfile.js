@@ -14,10 +14,13 @@ catch(e) {
 config = yaml.safeLoad(config)
 
 const root = config.root ? config.root : './src'
-const useTypescript = config.useTypescript ? config.useTypescript : false
+const useTypescript = config.useTypescript ? true : false
+const generateCss = config.generateCss ? true : false
+const generateTests = config.generateTests ? true : false
 const fileExt = useTypescript ? 'ts' : 'js'
 const reactExt = useTypescript ? 'tsx' : 'jsx'
 const cssExt = config.cssExtension ? config.cssExtension : 'css'
+const testExt = config.testExtension ? config.testExtension : 'spec'
 const viewPath = config.viewPath ? config.viewPath : 'views'
 const modelPath = config.modelPath ? config.modelPath : 'models'
 const servicePath = config.servicePath ? config.servicePath : 'services'
@@ -166,17 +169,27 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'add',
-                data: { cssExtension: cssExt },
+                data: { cssExtension: cssExt, generateCss },
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${reactExt}`,
                 templateFile: 'templates/component.hbs'
             },
             {
                 type: 'add',
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${cssExt}`
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${cssExt}`,
+                skip: function() {
+                    if (!generateCss) {
+                        return "Skipping css file generation because generateCss is disabled"
+                    }
+                }
             },
             {
                 type: 'add',
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.spec.${reactExt}`
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${testExt}.${reactExt}`,
+                skip: function() {
+                    if (!generateTests) {
+                        return "Skipping test spec file generation because generateTests is disabled"
+                    }
+                }
             }
         ]
     });
@@ -194,16 +207,26 @@ module.exports = function (plop) {
             {
                 type: 'add',
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${reactExt}`,
-                data: { cssExtension: cssExt },
+                data: { cssExtension: cssExt, generateCss },
                 templateFile: 'templates/class-component.hbs'
             },
             {
                 type: 'add',
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${cssExt}`
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${cssExt}`,
+                skip: function() {
+                    if (!generateCss) {
+                        return "Skipping css file generation because generateCss is disabled"
+                    }
+                }
             },
             {
                 type: 'add',
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.spec.${reactExt}`
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${testExt}.${reactExt}`,
+                skip: function() {
+                    if (!generateTests) {
+                        return "Skipping test spec file generation because generateTests is disabled"
+                    }
+                }
             }
         ]
     });
@@ -255,7 +278,12 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: `${root}/${servicePath}/{{${pathCase} service}}/{{${fileCase} service}}.spec.${fileExt}`
+                path: `${root}/${servicePath}/{{${pathCase} service}}/{{${fileCase} service}}.${testExt}.${fileExt}`,
+                skip: function() {
+                    if (!generateTests) {
+                        return "Skipping test spec file generation because generateTests is disabled"
+                    }
+                }
             }
         ]
     });

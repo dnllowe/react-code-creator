@@ -8,7 +8,10 @@ try {
         console.log('Creating plop-react.config.yaml')
 
         const config = `useTypescript: false # true or false. Default is false
+generateCss: true # true of false. Default is true
+generateTests: true # true of false. Default is true
 cssExtension: "css" # "css", "scss", "sass", or "less". Default is "css"
+testExtension: "spec" # "spec" or "test". Default is "spec"
 root: "./src" # Any filepath string. Default is "./src"
 viewPath: "views" # Any filepath string. Default is "views"
 modelPath: "models" # Any filepath string. Default is "models"
@@ -34,7 +37,7 @@ try {
 
     if (!scripts.new) {
         console.log('Adding plop-react "new" script to package.json')
-        scripts.new = 'new'
+        scripts.new = 'plop-react'
         packageJson.scripts = scripts
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 4))
     }
