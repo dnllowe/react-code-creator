@@ -20,7 +20,7 @@ Or
 ## Using
 
 ### Config file
-Plop-React uses a `plop-react.config.json` file (which you should place at your project's root directory) to determine how to generate certain files. The config file should automatically be added to your root folder after installation with npm.
+Plop-React uses a `plop-react.config.yaml` file (which you should place at your project's root directory) to determine how to generate certain files. The config file should automatically be added to your root folder after installation with npm.
 
 The config file has the following properties:
 
@@ -74,3 +74,5 @@ For example: `npm run new componenent myComponent`
 ### Commands
 You can see the full list of commands by running `npm run new`
 
+### Changing the Run command
+You can change the command from `new` by updating the `scripts` section of your `package.json` file.
