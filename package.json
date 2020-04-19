@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "author": "Daniel L. Lowe",
   "description": "A simple implementation of plop.js for common React files",
+  "repository": "https://github.com/dnllowe/plop-react",
   "keywords": [
+    "plop-react",
     "react",
     "plop.js",
     "plopjs",
@@ -13,7 +15,8 @@
     "scaffold",
     "files",
     "autogenerate",
-    "generate"
+    "generate",
+    "generator"
   ],
   "bin": {
     "new": "./bin/index.js"
