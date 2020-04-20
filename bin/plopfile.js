@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
+const args = process.argv.slice(6)
 
 config = null
 
@@ -8,7 +9,8 @@ try {
     config = fs.readFileSync(path.join(process.cwd(), 'plop-react.config.yaml'), 'utf8')
 }
 catch(e) {
-    throw "Error reading react-plop.config.json. Make sure you have created a react-plop.config.json file at the root of your project"
+    console.error("Error reading react-plop.config.json. Make sure you have created a react-plop.config.json file at the root of your project")
+    throw
 }
 
 config = yaml.safeLoad(config)
@@ -29,6 +31,13 @@ const contextPath = config.contextPath ? config.contextPath : 'contexts'
 let fileCase = 'camelCase'
 let pathCase = 'camelCase'
 let varCase = 'camelCase'
+
+const [ generator, name ] = args
+
+if (generator === 'model' && !useTypescript) {
+    console.error(`Could not create model ${name}. Model generator requires typescript. Must set useTypescript to true in plop-react.config.yaml to create models.`)
+    throw
+}
 
 switch (config.fileCase) {
     case 'camel':
