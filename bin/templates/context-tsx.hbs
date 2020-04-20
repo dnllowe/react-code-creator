@@ -1,0 +1,24 @@
+import React, { useState, createContext, useMemo } from 'react'
+
+type {{contextCase context}} = {
+
+}
+
+export const {{contextCase context}} = createContext<{{contextCase context}}>({
+
+})
+
+const {{contextProviderCase context}} = (props: any) => {
+
+    const {{contextProviderVarCase context}} = useMemo<{{contextCase context}}>(() => {
+        return {
+
+        }
+    }, [
+
+    ])
+
+    return <{{contextCase context}}.Provider value={ {{contextProviderVarCase context}} }{...props} />
+}
+
+export default {{contextProviderCase context}}

@@ -17,6 +17,7 @@ const root = config.root ? config.root : './src'
 const useTypescript = config.useTypescript ? true : false
 const generateCss = config.generateCss ? true : false
 const generateTests = config.generateTests ? true : false
+const generateInterfaces = config.generateInterfaces ? true : false
 const fileExt = useTypescript ? 'ts' : 'js'
 const reactExt = useTypescript ? 'tsx' : 'jsx'
 const cssExt = config.cssExtension ? config.cssExtension : 'css'
@@ -109,28 +110,10 @@ module.exports = function (plop) {
         return plop.getHelper(pathCase)(text)
     });
 
-    plop.setHelper('pascalSnakeCase', function (text) {
-        const snakeCase = plop.getHelper('snakeCase')(text)
-        let pascalSnakeCase = snakeCase[0].toUpperCase()
-        for (let i = 1; i < snakeCase.length; i++) {
-            let newChar = snakeCase[i]
-            if (snakeCase[i - 1] === '_') {
-                newChar = newChar.toUpperCase()
-            }
-
-            pascalSnakeCase += newChar
-        }
-        return pascalSnakeCase
-    });
-
     plop.setHelper('classCase', function (text) {
-        if (varCase === 'camelCase') {
+        if (fileCase === 'camelCase') {
             const camelCase = plop.getHelper('camelCase')(text)
             return plop.getHelper('upperCaseInitial')(camelCase)
-        }
-        else if (varCase === 'snakeCase') {
-            const snakeCase = plop.getHelper('snakeCase')(text)
-            return plop.getHelper('pascalSnakeCase')(snakeCase)
         }
         else {
             return plop.getHelper('pascalCase')(text)
@@ -144,17 +127,33 @@ module.exports = function (plop) {
 
     plop.setHelper('interfaceCase', function (text) {
         const interfaceText = `${text}-interface`
-        if (varCase === 'camelCase') {
+        if (fileCase === 'camelCase') {
             const camelCase = plop.getHelper('camelCase')(interfaceText)
             return plop.getHelper('upperCaseInitial')(camelCase)
-        }
-        else if (varCase === 'snakeCase') {
-            const snakeCase = plop.getHelper('snakeCase')(interfaceText)
-            return plop.getHelper('pascalSnakeCase')(snakeCase)
         }
         else {
             return plop.getHelper('pascalCase')(interfaceText)
         }
+    });
+
+    plop.setHelper('contextCase', function (text) {
+        const contextText = `${text}-context`
+        return plop.getHelper('classCase')(contextText)
+    });
+
+    plop.setHelper('contextProviderCase', function (text) {
+        const contextProviderText = `${text}-context-provider`
+        return plop.getHelper('classCase')(contextProviderText)
+    });
+
+    plop.setHelper('contextProviderVarCase', function (text) {
+        const contextProviderText = `${text}-context-provider`
+        return plop.getHelper(varCase)(contextProviderText)
+    });
+
+    plop.setHelper('contextFileCase', function (text) {
+        const contextText = `${text}-context`
+        return plop.getHelper(fileCase)(contextText)
     });
 
     plop.setGenerator('component', {
@@ -185,6 +184,7 @@ module.exports = function (plop) {
             {
                 type: 'add',
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${testExt}.${reactExt}`,
+                templateFile: 'templates/component-spec.hbs',
                 skip: function() {
                     if (!generateTests) {
                         return "Skipping test spec file generation because generateTests is disabled"
@@ -222,6 +222,7 @@ module.exports = function (plop) {
             {
                 type: 'add',
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${testExt}.${reactExt}`,
+                templateFile: 'templates/component-spec.hbs',
                 skip: function() {
                     if (!generateTests) {
                         return "Skipping test spec file generation because generateTests is disabled"
@@ -244,7 +245,7 @@ module.exports = function (plop) {
             actions: [
                 {
                     type: 'add',
-                    path: `${root}/${modelPath}/{{${pathCase} model}}/{{${fileCase} model}}.${fileExt}`,
+                    path: `${root}/${modelPath}/{{${fileCase} model}}.${fileExt}`,
                     templateFile: 'templates/model.hbs'
                 }
             ]
@@ -257,7 +258,7 @@ module.exports = function (plop) {
             {
                 type: 'input',
                 name: 'service',
-                message: 'name of service'
+                message: 'name of service',
             }
         ],
         actions: [
@@ -265,20 +266,22 @@ module.exports = function (plop) {
                 type: 'add',
                 path: `${root}/${servicePath}/{{${pathCase} service}}/{{${fileCase} service}}.${fileExt}`,
                 templateFile: `templates/service.${fileExt}.hbs`,
+                data: { generateInterfaces }
             },
             {
                 type: 'add',
                 path: `${root}/${servicePath}/{{${pathCase} service}}/{{addInterface service}}.${fileExt}`,
                 templateFile: `templates/service-interface.hbs`,
                 skip: function() {
-                    if (!useTypescript) {
-                        return "Skipping interface generation because typescript is disabled"
+                    if (!useTypescript || !generateInterfaces) {
+                        return "Skipping interface generation because typescript or generateInterfaces is disabled"
                     }
                 }
             },
             {
                 type: 'add',
                 path: `${root}/${servicePath}/{{${pathCase} service}}/{{${fileCase} service}}.${testExt}.${fileExt}`,
+                templateFile: `templates/service-spec.hbs`,
                 skip: function() {
                     if (!generateTests) {
                         return "Skipping test spec file generation because generateTests is disabled"
@@ -300,8 +303,8 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'add',
-                path: `${root}/${contextPath}/{{${pathCase} context}}Context.${reactExt}`,
-                templateFile: 'templates/context.hbs'
+                path: `${root}/${contextPath}/{{contextFileCase context}}.${reactExt}`,
+                templateFile: `templates/context-${reactExt}.hbs`
             }
         ]
     });

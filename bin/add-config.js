@@ -8,8 +8,9 @@ try {
         console.log('Creating plop-react.config.yaml')
 
         const config = `useTypescript: false # true or false. Default is false
-generateCss: true # true of false. Default is true
-generateTests: true # true of false. Default is true
+generateCss: true # true or false. Default is true
+generateTests: true # true or false. Default is true
+generateInterfaces: true # true or false. Default is true
 cssExtension: "css" # "css", "scss", "sass", or "less". Default is "css"
 testExtension: "spec" # "spec" or "test". Default is "spec"
 root: "./src" # Any filepath string. Default is "./src"

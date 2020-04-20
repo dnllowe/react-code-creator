@@ -1,7 +1,13 @@
-import {{interfaceCase service}} from './{{interfaceCase service}}'
+{{#if generateInterfaces}}
+import {{interfaceCase service}} from './{{fileCase service}}'
 
 export class {{classCase service}} implements {{interfaceCase service}} {
 
 }
+{{else}}
+export class {{classCase service}} {
 
-export default {{classCase service}}}}
+}
+{{/if}}
+
+export default {{classCase service}}
