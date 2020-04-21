@@ -27,6 +27,8 @@ const viewPath = config.viewPath ? config.viewPath : 'views'
 const modelPath = config.modelPath ? config.modelPath : 'models'
 const servicePath = config.servicePath ? config.servicePath : 'services'
 const contextPath = config.contextPath ? config.contextPath : 'contexts'
+const reduxPath = config.reduxPath ? config.reduxPath : 'redux'
+
 let fileCase = 'camelCase'
 let pathCase = 'camelCase'
 let varCase = 'camelCase'
@@ -99,23 +101,23 @@ switch (config.fileCase) {
 module.exports = function (plop) {
     plop.setHelper('lowerCaseInitial', function (text) {
         return text[0].toLowerCase() + text.slice(1)
-    });
+    })
 
     plop.setHelper('upperCaseInitial', function (text) {
         return text[0].toUpperCase() + text.slice(1)
-    });
+    })
 
     plop.setHelper('varCase', function (text) {
         return plop.getHelper(varCase)(text)
-    });
+    })
 
     plop.setHelper('fileCase', function (text) {
         return plop.getHelper(fileCase)(text)
-    });
+    })
 
     plop.setHelper('pathCase', function (text) {
         return plop.getHelper(pathCase)(text)
-    });
+    })
 
     plop.setHelper('classCase', function (text) {
         if (fileCase === 'camelCase') {
@@ -125,12 +127,12 @@ module.exports = function (plop) {
         else {
             return plop.getHelper('pascalCase')(text)
         }
-    });
+    })
 
     plop.setHelper('addInterface', function (text) {
         const interfaceText = `${text}-interface`
         return plop.getHelper(fileCase)(interfaceText)
-    });
+    })
 
     plop.setHelper('interfaceCase', function (text) {
         const interfaceText = `${text}-interface`
@@ -141,65 +143,37 @@ module.exports = function (plop) {
         else {
             return plop.getHelper('pascalCase')(interfaceText)
         }
-    });
+    })
 
     plop.setHelper('contextCase', function (text) {
         const contextText = `${text}-context`
         return plop.getHelper('classCase')(contextText)
-    });
+    })
 
     plop.setHelper('contextProviderCase', function (text) {
         const contextProviderText = `${text}-context-provider`
         return plop.getHelper('classCase')(contextProviderText)
-    });
+    })
 
     plop.setHelper('contextProviderVarCase', function (text) {
         const contextProviderText = `${text}-context-provider`
         return plop.getHelper(varCase)(contextProviderText)
-    });
+    })
 
     plop.setHelper('contextFileCase', function (text) {
         const contextText = `${text}-context`
         return plop.getHelper(fileCase)(contextText)
-    });
+    })
 
-    plop.setGenerator('component', {
-        description: 'Create a functional component / view',
-        prompts: [
-            {
-                type: 'input',
-                name: 'component',
-                message: 'name of component'
-            }
-        ],
-        actions: [
-            {
-                type: 'add',
-                data: { cssExtension: cssExt, generateCss },
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${reactExt}`,
-                templateFile: 'templates/component.hbs'
-            },
-            {
-                type: 'add',
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${cssExt}`,
-                skip: function() {
-                    if (!generateCss) {
-                        return "Skipping css file generation because generateCss is disabled"
-                    }
-                }
-            },
-            {
-                type: 'add',
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${testExt}.${reactExt}`,
-                templateFile: 'templates/component-spec.hbs',
-                skip: function() {
-                    if (!generateTests) {
-                        return "Skipping test spec file generation because generateTests is disabled"
-                    }
-                }
-            }
-        ]
-    });
+    plop.setHelper('addReducer', function (text) {
+        const reducerText = `${text}-reducer`
+        return plop.getHelper(fileCase)(reducerText)
+    })
+
+    plop.setHelper('reducerCase', function (text) {
+        const reducerText = `${text}-reducer`
+        return plop.getHelper(varCase)(reducerText)
+    })
 
     plop.setGenerator('class-component', {
         description: 'Create a class component / view',
@@ -237,7 +211,64 @@ module.exports = function (plop) {
                 }
             }
         ]
-    });
+    })
+
+    plop.setGenerator('component', {
+        description: 'Create a functional component / view',
+        prompts: [
+            {
+                type: 'input',
+                name: 'component',
+                message: 'name of component'
+            }
+        ],
+        actions: [
+            {
+                type: 'add',
+                data: { cssExtension: cssExt, generateCss },
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${reactExt}`,
+                templateFile: 'templates/component.hbs'
+            },
+            {
+                type: 'add',
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${cssExt}`,
+                skip: function() {
+                    if (!generateCss) {
+                        return "Skipping css file generation because generateCss is disabled"
+                    }
+                }
+            },
+            {
+                type: 'add',
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${testExt}.${reactExt}`,
+                templateFile: 'templates/component-spec.hbs',
+                skip: function() {
+                    if (!generateTests) {
+                        return "Skipping test spec file generation because generateTests is disabled"
+                    }
+                }
+            }
+        ]
+    })
+
+    plop.setGenerator('context', {
+        description: 'Create a context',
+        prompts: [
+            {
+                type: 'input',
+                name: 'context',
+                message: 'name of context'
+            }
+        ],
+        actions: [
+            {
+                type: 'add',
+                path: `${root}/${contextPath}/{{contextFileCase context}}.${reactExt}`,
+                templateFile: `templates/context-${reactExt}.hbs`
+            }
+        ]
+    })
+
 
     if (useTypescript) {
         plop.setGenerator('model', {
@@ -256,8 +287,54 @@ module.exports = function (plop) {
                     templateFile: 'templates/model.hbs'
                 }
             ]
-        });
+        })
     }
+
+    plop.setGenerator('reducer', {
+        description: 'Create a Redux reducer',
+        prompts: [
+            {
+                type: 'input',
+                name: 'reducer',
+                message: 'name of reducer'
+            }
+        ],
+        actions: [
+            {
+                type: 'add',
+                path: `${root}/${reduxPath}/reducers/{{addReducer reducer}}.${fileExt}`,
+                templateFile: 'templates/reducer.hbs'
+            },
+            {
+                type: 'add',
+                data: { store: 'store' },
+                path: `${root}/${reduxPath}/{{${fileCase} store}}.${fileExt}`,
+                templateFile: 'templates/redux-store.hbs',
+                skipIfExists: true
+            },
+            {
+                type: 'add',
+                data: { index: 'index' },
+                path: `${root}/${reduxPath}/reducers/{{${fileCase} index}}.${fileExt}`,
+                templateFile: 'templates/reducer-index.hbs',
+                skipIfExists: true
+            },
+            {
+                type: 'append',
+                pattern: /import.*redux['|"]/gi,
+                data: { index: 'index' },
+                path: `${root}/${reduxPath}/reducers/{{${fileCase} index}}.${fileExt}`,
+                templateFile: 'templates/reducer-index-append-import.hbs'
+            },
+            {
+                type: 'append',
+                pattern: /export.*/gi,
+                data: { index: 'index' },
+                path: `${root}/${reduxPath}/reducers/{{${fileCase} index}}.${fileExt}`,
+                templateFile: 'templates/reducer-index-append-combined-reducers.hbs'
+            },
+        ]
+    })
 
     plop.setGenerator('service', {
         description: 'Create a service',
@@ -296,23 +373,5 @@ module.exports = function (plop) {
                 }
             }
         ]
-    });
-
-    plop.setGenerator('context', {
-        description: 'Create a context',
-        prompts: [
-            {
-                type: 'input',
-                name: 'context',
-                message: 'name of context'
-            }
-        ],
-        actions: [
-            {
-                type: 'add',
-                path: `${root}/${contextPath}/{{contextFileCase context}}.${reactExt}`,
-                templateFile: `templates/context-${reactExt}.hbs`
-            }
-        ]
-    });
-};
+    })
+}
