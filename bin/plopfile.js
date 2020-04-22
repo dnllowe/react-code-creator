@@ -1,3 +1,5 @@
+// TO DO: pathCase any hardcoded paths
+
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
@@ -377,20 +379,19 @@ module.exports = function (plop) {
                 path: `${root}/${reduxPath}/actions/{{${fileCase} actions}}.${fileExt}`,
                 templateFile: 'templates/redux-action-append.hbs'
             },
-            // {
-            //     type: 'append',
-            //     pattern: /import.*redux['|"]/gi,
-            //     data: { index: 'index' },
-            //     path: `${root}/${reduxPath}/reducers/{{${fileCase} index}}.${fileExt}`,
-            //     templateFile: 'templates/reducer-index-append-import.hbs'
-            // },
-            // {
-            //     type: 'append',
-            //     pattern: /export.*/gi,
-            //     data: { index: 'index' },
-            //     path: `${root}/${reduxPath}/reducers/{{${fileCase} index}}.${fileExt}`,
-            //     templateFile: 'templates/reducer-index-append-combined-reducers.hbs'
-            // },
+            {
+                type: 'append',
+                data: { actions: 'actions' },
+                pattern: /^/,
+                path: `${root}/${reduxPath}/reducers/{{reducer}}.${fileExt}`,
+                templateFile: 'templates/redux-action-append-reducer-import.hbs'
+            },
+            {
+                type: 'append',
+                pattern: /switch.*/gi,
+                path: `${root}/${reduxPath}/reducers/{{reducer}}.${fileExt}`,
+                templateFile: 'templates/redux-action-append-reducer-case.hbs'
+            },
         ]
     })
 
