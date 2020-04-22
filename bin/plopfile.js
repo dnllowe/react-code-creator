@@ -359,6 +359,7 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'add',
+                data: { actions: 'actions' },
                 path: `${root}/${reduxPath}/actions/{{fileCase action}}.${fileExt}`,
                 templateFile: 'templates/redux-action-creator.hbs'
             },
