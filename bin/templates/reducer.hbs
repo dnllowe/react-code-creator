@@ -1,17 +1,15 @@
 
 const defaultState = {
-  // TO DO: fill this in
+	// TO DO: fill this in
 }
 
-export default (prevState = defaultState, action) => {
+export default (prevState = defaultState, action{{#if useTypescript}}: { type: string }{{/if}}) => {
 
-  let newState = { ...prevState }
+  	let newState = { ...prevState }
 
-  switch (action.type) {
+  	switch (action.type) {
 
     default:
-      return prevState
-  }
-
-  return newState
+      	return prevState
+  	}
 }

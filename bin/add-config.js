@@ -19,8 +19,8 @@ modelPath: "models" # Any filepath string. Default is "models"
 servicePath: "services" # Any filepath string. Default is "services"
 contextPath: "contexts" # Any filepath string. Default is "contexts"
 reduxPath: "redux" # Any filepath string. Default is "redux"
-fileCase: "camel" # "camel", "dash", "pascal", "snake", or "dot". Default is "camel"
-pathCase: "camel" # "camel", "dash", "pascal", or "snake". Default is "camel"`
+fileCase: "pascal" # "camel", "dash", "pascal", "snake", or "dot". Default is "pascal"
+pathCase: "dash" # "camel", "dash", "pascal", or "snake". Default is "dash"`
 
         fs.writeFileSync(filePath,config)
     } else {

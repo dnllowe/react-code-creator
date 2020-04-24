@@ -1,5 +1,3 @@
-// TO DO: pathCase any hardcoded paths
-
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
@@ -304,7 +302,8 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'add',
-                path: `${root}/${reduxPath}/reducers/{{addReducer reducer}}.${fileExt}`,
+                data: { reducers: 'reducers', useTypescript },
+                path: `${root}/${reduxPath}/{{${pathCase} reducers}}/{{addReducer reducer}}.${fileExt}`,
                 templateFile: 'templates/reducer.hbs'
             },
             {
@@ -316,84 +315,87 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                data: { index: 'index' },
-                path: `${root}/${reduxPath}/reducers/{{${fileCase} index}}.${fileExt}`,
+                data: { reducers: 'reducers' },
+                path: `${root}/${reduxPath}/{{${pathCase} reducers}}/index.${fileExt}`,
                 templateFile: 'templates/reducer-index.hbs',
                 skipIfExists: true
             },
             {
                 type: 'append',
                 pattern: /import.*redux['|"]/gi,
-                data: { index: 'index' },
-                path: `${root}/${reduxPath}/reducers/{{${fileCase} index}}.${fileExt}`,
+                data: { reducers: 'reducers' },
+                path: `${root}/${reduxPath}/{{${pathCase} reducers}}/index.${fileExt}`,
                 templateFile: 'templates/reducer-index-append-import.hbs'
             },
             {
                 type: 'append',
                 pattern: /export.*/gi,
-                data: { index: 'index' },
-                path: `${root}/${reduxPath}/reducers/{{${fileCase} index}}.${fileExt}`,
+                data: { reducers: 'reducers' },
+                path: `${root}/${reduxPath}/{{${pathCase} reducers}}/index.${fileExt}`,
                 templateFile: 'templates/reducer-index-append-combined-reducers.hbs'
             },
         ]
     })
 
-    const reducers = fs
-        .readdirSync(path.join(process.cwd(), root, reduxPath, 'reducers'))
-        .map(file => file.replace(`.${fileExt}`, ''))
-        .filter(reducer => reducer.toLowerCase() !== 'index')
+    if (fs.existsSync(path.join(process.cwd(), root, reduxPath))) {
+        const reducers = fs
+            .readdirSync(path.join(process.cwd(), root, reduxPath, 'reducers'))
+            .map(file => file.replace(`.${fileExt}`, ''))
+            .filter(reducer => reducer.toLowerCase() !== 'index')
 
-    plop.setGenerator('redux-action', {
-        description: 'Create a Redux action for a reducer',
-        prompts: [
-            {
-                type: 'input',
-                name: 'action',
-                message: 'name of action'
-            },
-            {
-                type: 'rawlist',
-                name: 'reducer',
-                message: 'which reducer does the action apply to?',
-                choices: reducers
-            }
-        ],
-        actions: [
-            {
-                type: 'add',
-                data: { actions: 'actions' },
-                path: `${root}/${reduxPath}/actions/{{fileCase action}}.${fileExt}`,
-                templateFile: 'templates/redux-action-creator.hbs'
-            },
-            {
-                type: 'add',
-                data: { actions: 'actions' },
-                path: `${root}/${reduxPath}/actions/{{${fileCase} actions}}.${fileExt}`,
-                templateFile: 'templates/redux-action.hbs',
-                skipIfExists: true
-            },
-            {
-                type: 'append',
-                data: { actions: 'actions' },
-                pattern: /export.*/gi,
-                path: `${root}/${reduxPath}/actions/{{${fileCase} actions}}.${fileExt}`,
-                templateFile: 'templates/redux-action-append.hbs'
-            },
-            {
-                type: 'append',
-                data: { actions: 'actions' },
-                pattern: /^/,
-                path: `${root}/${reduxPath}/reducers/{{reducer}}.${fileExt}`,
-                templateFile: 'templates/redux-action-append-reducer-import.hbs'
-            },
-            {
-                type: 'append',
-                pattern: /switch.*/gi,
-                path: `${root}/${reduxPath}/reducers/{{reducer}}.${fileExt}`,
-                templateFile: 'templates/redux-action-append-reducer-case.hbs'
-            },
-        ]
-    })
+        plop.setGenerator('redux-action', {
+            description: 'Create a Redux action for a reducer',
+            prompts: [
+                {
+                    type: 'input',
+                    name: 'action',
+                    message: 'name of action'
+                },
+                {
+                    type: 'rawlist',
+                    name: 'reducer',
+                    message: 'which reducer does the action apply to?',
+                    choices: reducers
+                }
+            ],
+            actions: [
+                {
+                    type: 'add',
+                    data: { actions: 'actions' },
+                    path: `${root}/${reduxPath}/{{${pathCase} actions}}/{{fileCase action}}.${fileExt}`,
+                    templateFile: 'templates/redux-action-creator.hbs'
+                },
+                {
+                    type: 'add',
+                    data: { actions: 'actions' },
+                    path: `${root}/${reduxPath}/{{${pathCase} actions}}/{{${fileCase} actions}}.${fileExt}`,
+                    templateFile: 'templates/redux-action.hbs',
+                    skipIfExists: true
+                },
+                {
+                    type: 'append',
+                    data: { actions: 'actions' },
+                    pattern: /export.*/gi,
+                    path: `${root}/${reduxPath}/{{${pathCase} actions}}/{{${fileCase} actions}}.${fileExt}`,
+                    templateFile: 'templates/redux-action-append.hbs'
+                },
+                {
+                    type: 'append',
+                    data: { actions: 'actions', reducers: 'reducers' },
+                    pattern: /^/,
+                    path: `${root}/${reduxPath}/{{${pathCase} reducers}}/{{reducer}}.${fileExt}`,
+                    templateFile: 'templates/redux-action-append-reducer-import.hbs'
+                },
+                {
+                    type: 'append',
+                    data: { reducers: 'reducers' },
+                    pattern: /switch.*/gi,
+                    path: `${root}/${reduxPath}/{{${pathCase} reducers}}/{{reducer}}.${fileExt}`,
+                    templateFile: 'templates/redux-action-append-reducer-case.hbs'
+                },
+            ]
+        })
+    }
 
     plop.setGenerator('service', {
         description: 'Create a service',
