@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react'{{#if useSemicolons}};{{/if}}
 {{#if generateCss}}
-import './{{fileCase component}}.{{cssExtension}}'
+import './{{fileCase component}}.{{cssExtension}}'{{#if useSemicolons}};{{/if}}
 {{/if}}
 
 export class {{classCase component}} extends React.Component {
     constructor(props) {
-        super(props)
+        super(props){{#if useSemicolons}};{{/if}}
     }
 }
 
-export default {{classCase component}}
+export default {{classCase component}}{{#if useSemicolons}};{{/if}}

@@ -1,15 +1,15 @@
 
 const defaultState = {
 	// TO DO: fill this in
-}
+}{{#if useSemicolons}};{{/if}}
 
 export default (prevState = defaultState, action{{#if useTypescript}}: { type: string }{{/if}}) => {
 
-  	let newState = { ...prevState }
+  	let newState = { ...prevState }{{#if useSemicolons}};{{/if}}
 
   	switch (action.type) {
 
     default:
-      	return prevState
+      	return prevState{{#if useSemicolons}};{{/if}}
   	}
-}
+}{{#if useSemicolons}};{{/if}}

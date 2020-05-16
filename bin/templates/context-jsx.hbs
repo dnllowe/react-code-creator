@@ -1,20 +1,20 @@
-import React, { useState, createContext, useMemo } from 'react'
+import React, { useState, createContext, useMemo } from 'react'{{#if useSemicolons}};{{/if}}
 
 export const {{contextCase context}} = createContext({
 
-})
+}){{#if useSemicolons}};{{/if}}
 
 const {{contextProviderCase context}} = (props) => {
 
     const {{contextProviderVarCase context}} = useMemo(() => {
         return {
 
-        }
+        }{{#if useSemicolons}};{{/if}}
     }, [
 
-    ])
+    ]){{#if useSemicolons}};{{/if}}
 
-    return <{{contextCase context}}.Provider value={ {{contextProviderVarCase context}} }{...props} />
+    return <{{contextCase context}}.Provider value={ {{contextProviderVarCase context}} }{...props} />{{#if useSemicolons}};{{/if}}
 }
 
-export default {{contextProviderCase context}}
+export default {{contextProviderCase context}}{{#if useSemicolons}};{{/if}}

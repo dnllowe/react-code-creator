@@ -1,6 +1,10 @@
 const fs = require('fs')
 const path = require('path')
 
+if (fs.existsSync('./.react-code-creator-skip-post-install')) {
+    process.exit(0)
+}
+
 try {
     const filePath = path.resolve(process.cwd(), '..', '..', 'react-code-creator.config.yaml')
 
@@ -20,7 +24,8 @@ servicePath: "services" # Any filepath string. Default is "services"
 contextPath: "contexts" # Any filepath string. Default is "contexts"
 reduxPath: "redux" # Any filepath string. Default is "redux"
 fileCase: "pascal" # "camel", "dash", "pascal", "snake", or "dot". Default is "pascal"
-pathCase: "dash" # "camel", "dash", "pascal", or "snake". Default is "dash"`
+pathCase: "dash" # "camel", "dash", "pascal", or "snake". Default is "dash"
+useSemicolons: true # true or false. Default is true`
 
         fs.writeFileSync(filePath,config)
     } else {

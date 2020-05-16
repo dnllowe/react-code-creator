@@ -1,13 +1,13 @@
 {{#if generateInterfaces}}
-import {{interfaceCase service}} from './{{fileCase service}}'
+import {{interfaceCase service}} from './{{fileCase service}}'{{#if useSemicolons}};{{/if}}
 
 export class {{classCase service}} implements {{interfaceCase service}} {
 
-}
+}{{#if useSemicolons}};{{/if}}
 {{else}}
 export class {{classCase service}} {
 
-}
+}{{#if useSemicolons}};{{/if}}
 {{/if}}
 
-export default {{classCase service}}
+export default {{classCase service}}{{#if useSemicolons}};{{/if}}

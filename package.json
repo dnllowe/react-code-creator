@@ -25,8 +25,11 @@
   "scripts": {
     "postinstall": "node ./bin/add-config.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "js-yaml": "^3.13.1",
-    "plop": "^2.5.3"
+    "plop": "^2.6.0"
+  },
+  "peerDependencies": {
+    "plop": "^2.6.0"
   }
 }

@@ -28,6 +28,7 @@ const modelPath = config.modelPath ? config.modelPath : 'models'
 const servicePath = config.servicePath ? config.servicePath : 'services'
 const contextPath = config.contextPath ? config.contextPath : 'contexts'
 const reduxPath = config.reduxPath ? config.reduxPath : 'redux'
+const useSemicolons = config.useSemicolons ? config.useSemicolons : true
 
 let fileCase = 'camelCase'
 let pathCase = 'camelCase'
@@ -188,7 +189,7 @@ module.exports = function (plop) {
             {
                 type: 'add',
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${reactExt}`,
-                data: { cssExtension: cssExt, generateCss },
+                data: { cssExtension: cssExt, generateCss, useSemicolons },
                 templateFile: 'templates/class-component.hbs'
             },
             {
@@ -203,6 +204,7 @@ module.exports = function (plop) {
             {
                 type: 'add',
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${testExt}.${reactExt}`,
+                data: { useSemicolons },
                 templateFile: 'templates/component-spec.hbs',
                 skip: function() {
                     if (!generateTests) {
@@ -225,7 +227,7 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'add',
-                data: { cssExtension: cssExt, generateCss },
+                data: { cssExtension: cssExt, generateCss, useSemicolons },
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${reactExt}`,
                 templateFile: 'templates/component.hbs'
             },
@@ -241,6 +243,7 @@ module.exports = function (plop) {
             {
                 type: 'add',
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${testExt}.${reactExt}`,
+                data: { useSemicolons },
                 templateFile: 'templates/component-spec.hbs',
                 skip: function() {
                     if (!generateTests) {
@@ -263,6 +266,7 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'add',
+                data: { useSemicolons },
                 path: `${root}/${contextPath}/{{contextFileCase context}}.${reactExt}`,
                 templateFile: `templates/context-${reactExt}.hbs`
             }
@@ -283,6 +287,7 @@ module.exports = function (plop) {
             actions: [
                 {
                     type: 'add',
+                    data: { useSemicolons },
                     path: `${root}/${modelPath}/{{${fileCase} model}}.${fileExt}`,
                     templateFile: 'templates/model.hbs'
                 }
@@ -302,20 +307,20 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'add',
-                data: { reducers: 'reducers', useTypescript },
+                data: { reducers: 'reducers', useTypescript, useSemicolons },
                 path: `${root}/${reduxPath}/{{${pathCase} reducers}}/{{addReducer reducer}}.${fileExt}`,
                 templateFile: 'templates/reducer.hbs'
             },
             {
                 type: 'add',
-                data: { store: 'store' },
+                data: { store: 'store', useSemicolons },
                 path: `${root}/${reduxPath}/{{${fileCase} store}}.${fileExt}`,
                 templateFile: 'templates/redux-store.hbs',
                 skipIfExists: true
             },
             {
                 type: 'add',
-                data: { reducers: 'reducers' },
+                data: { reducers: 'reducers', useSemicolons },
                 path: `${root}/${reduxPath}/{{${pathCase} reducers}}/index.${fileExt}`,
                 templateFile: 'templates/reducer-index.hbs',
                 skipIfExists: true
@@ -323,14 +328,14 @@ module.exports = function (plop) {
             {
                 type: 'append',
                 pattern: /import.*redux['|"]/gi,
-                data: { reducers: 'reducers' },
+                data: { reducers: 'reducers', useSemicolons },
                 path: `${root}/${reduxPath}/{{${pathCase} reducers}}/index.${fileExt}`,
                 templateFile: 'templates/reducer-index-append-import.hbs'
             },
             {
                 type: 'append',
                 pattern: /export.*/gi,
-                data: { reducers: 'reducers' },
+                data: { reducers: 'reducers', useSemicolons },
                 path: `${root}/${reduxPath}/{{${pathCase} reducers}}/index.${fileExt}`,
                 templateFile: 'templates/reducer-index-append-combined-reducers.hbs'
             },
@@ -361,34 +366,34 @@ module.exports = function (plop) {
             actions: [
                 {
                     type: 'add',
-                    data: { actions: 'actions' },
+                    data: { actions: 'actions', useSemicolons },
                     path: `${root}/${reduxPath}/{{${pathCase} actions}}/{{fileCase action}}.${fileExt}`,
                     templateFile: 'templates/redux-action-creator.hbs'
                 },
                 {
                     type: 'add',
-                    data: { actions: 'actions' },
+                    data: { actions: 'actions', useSemicolons },
                     path: `${root}/${reduxPath}/{{${pathCase} actions}}/{{${fileCase} actions}}.${fileExt}`,
                     templateFile: 'templates/redux-action.hbs',
                     skipIfExists: true
                 },
                 {
                     type: 'append',
-                    data: { actions: 'actions' },
+                    data: { actions: 'actions', useSemicolons },
                     pattern: /export.*/gi,
                     path: `${root}/${reduxPath}/{{${pathCase} actions}}/{{${fileCase} actions}}.${fileExt}`,
                     templateFile: 'templates/redux-action-append.hbs'
                 },
                 {
                     type: 'append',
-                    data: { actions: 'actions', reducers: 'reducers' },
+                    data: { actions: 'actions', reducers: 'reducers', useSemicolons },
                     pattern: /^/,
                     path: `${root}/${reduxPath}/{{${pathCase} reducers}}/{{reducer}}.${fileExt}`,
                     templateFile: 'templates/redux-action-append-reducer-import.hbs'
                 },
                 {
                     type: 'append',
-                    data: { reducers: 'reducers' },
+                    data: { reducers: 'reducers', useSemicolons },
                     pattern: /switch.*/gi,
                     path: `${root}/${reduxPath}/{{${pathCase} reducers}}/{{reducer}}.${fileExt}`,
                     templateFile: 'templates/redux-action-append-reducer-case.hbs'
@@ -411,11 +416,12 @@ module.exports = function (plop) {
                 type: 'add',
                 path: `${root}/${servicePath}/{{${pathCase} service}}/{{${fileCase} service}}.${fileExt}`,
                 templateFile: `templates/service.${fileExt}.hbs`,
-                data: { generateInterfaces }
+                data: { generateInterfaces, useSemicolons }
             },
             {
                 type: 'add',
                 path: `${root}/${servicePath}/{{${pathCase} service}}/{{addInterface service}}.${fileExt}`,
+                data: { useSemicolons },
                 templateFile: `templates/service-interface.hbs`,
                 skip: function() {
                     if (!useTypescript || !generateInterfaces) {
@@ -426,6 +432,7 @@ module.exports = function (plop) {
             {
                 type: 'add',
                 path: `${root}/${servicePath}/{{${pathCase} service}}/{{${fileCase} service}}.${testExt}.${fileExt}`,
+                data: { useSemicolons },
                 templateFile: `templates/service-spec.hbs`,
                 skip: function() {
                     if (!generateTests) {

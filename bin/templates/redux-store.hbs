@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import reducer from './reducers'
+import { createStore } from 'redux'{{#if useSemicolons}};{{/if}}
+import reducer from './reducers'{{#if useSemicolons}};{{/if}}
 
-// TO DO: Update initial state (second argument of createStore)
-export default createStore(reducer, null)
+export default createStore(reducer){{#if useSemicolons}};{{/if}}

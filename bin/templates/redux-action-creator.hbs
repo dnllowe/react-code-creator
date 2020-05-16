@@ -1,9 +1,9 @@
-import actions from './{{fileCase actions}}'
+import actions from './{{fileCase actions}}'{{#if useSemicolons}};{{/if}}
 
 const {{varCase action}} = () => {
   return {
     type: actions.{{constantCase action}},
-  }
+  }{{#if useSemicolons}};{{/if}}
 }
 
-export default {{varCase action}}
+export default {{varCase action}}{{#if useSemicolons}};{{/if}}
