@@ -6,10 +6,10 @@ const args = process.argv.slice(6)
 config = null
 
 try {
-    config = fs.readFileSync(path.join(process.cwd(), 'plop-react.config.yaml'), 'utf8')
+    config = fs.readFileSync(path.join(process.cwd(), 'react-code-creator.config.yaml'), 'utf8')
 }
 catch(e) {
-    throw "Error reading react-plop.config.json. Make sure you have created a react-plop.config.json file at the root of your project"
+    throw "Error reading react-code-creator.config.json. Make sure you have created a react-code-creator.config.json file at the root of your project"
 }
 
 config = yaml.safeLoad(config)
@@ -36,7 +36,7 @@ let varCase = 'camelCase'
 const [ generator, name ] = args
 
 if (generator === 'model' && !useTypescript) {
-    throw `Could not create model ${name}. Model generator requires typescript. Must set useTypescript to true in plop-react.config.yaml to create models.`
+    throw `Could not create model ${name}. Model generator requires typescript. Must set useTypescript to true in react-code-creator.config.yaml to create models.`
 }
 
 switch (config.fileCase) {
