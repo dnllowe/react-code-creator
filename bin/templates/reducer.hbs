@@ -9,7 +9,7 @@ export default (prevState = defaultState, action{{#if useTypescript}}: { type: s
 
   	switch (action.type) {
 
-    default:
-      	return prevState{{#if useSemicolons}};{{/if}}
+    	default:
+      		return prevState{{#if useSemicolons}};{{/if}}
   	}
 }{{#if useSemicolons}};{{/if}}
