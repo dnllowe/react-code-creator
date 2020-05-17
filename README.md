@@ -1,7 +1,7 @@
 # React Code Creator
 
 ## Summary
-Create boilerplate code for common React files.
+A lightweight tool to create boilerplate code for common React files.
 
 React Code Creator is a simple implementation of [plop.js](https://plopjs.com/) for common React files.
 

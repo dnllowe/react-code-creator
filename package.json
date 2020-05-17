@@ -2,7 +2,7 @@
   "name": "react-code-creator",
   "version": "0.1.0",
   "author": "Daniel L. Lowe",
-  "description": "Create boilerplate code for common React files",
+  "description": "A lightweight tool to create boilerplate code for common React files",
   "repository": "https://github.com/dnllowe/react-code-creator",
   "keywords": [
     "react-code-creator",
@@ -27,6 +27,9 @@
   },
   "scripts": {
     "postinstall": "node ./bin/add-config.js"
+  },
+  "bugs": {
+    "url": "https://github.com/dnllowe/react-code-creator/issues"
   },
   "dependencies": {
     "js-yaml": "^3.13.1",
