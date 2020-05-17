@@ -96,3 +96,8 @@ But when creating a `Context` or `Reducer`, React Code Creator will append `Cont
 For example:
 * Creating context: `user` -> `userContext`
 * Creating a reducer: `user` -> `userReducer`
+
+## Troubleshooting
+
+### Avoid frequently changing the config
+React Code Creator relies on regex patterns to track and modify some generated files. Avoid changing the config parameters (such as file casing patterns, directories, or enabling/disabling typescript) to avoid errors related to locating previously generated files.
