@@ -16,7 +16,7 @@ const {{contextProviderCase context}} = (props: any) => {
         }{{#if useSemicolons}};{{/if}}
     }, [
 
-    ])
+    ]){{#if useSemicolons}};{{/if}}
 
     return <{{contextCase context}}.Provider value={ {{contextProviderVarCase context}} }{...props} />{{#if useSemicolons}};{{/if}}
 }
