@@ -7,6 +7,12 @@ export class {{classCase component}} extends React.Component {
     constructor(props) {
         super(props){{#if useSemicolons}};{{/if}}
     }
+
+    render() {
+        return (
+            <div>Hello {{classCase component}}!</div>
+        ){{#if useSemicolons}};{{/if}}
+    }
 }
 
 export default {{classCase component}}{{#if useSemicolons}};{{/if}}
