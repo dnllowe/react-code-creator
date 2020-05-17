@@ -83,7 +83,7 @@ switch (config.pathCase) {
         break
 }
 
-switch (config.fileCase) {
+switch (config.varCase) {
     case 'camel':
         varCase = 'camelCase'
         break
