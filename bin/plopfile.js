@@ -215,7 +215,7 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.story.${reactExt}`,
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.stories.${reactExt}`,
                 data: { useSemicolons },
                 templateFile: 'templates/story.hbs',
                 skip: function() {
@@ -265,7 +265,7 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.story.${reactExt}`,
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.stories.${reactExt}`,
                 data: { useSemicolons },
                 templateFile: 'templates/story.hbs',
                 skip: function() {
