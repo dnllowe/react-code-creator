@@ -8,7 +8,7 @@ export const {{contextCase context}} = createContext<{{contextCase context}}>({
 
 }){{#if useSemicolons}};{{/if}}
 
-const {{contextProviderCase context}} = (props: any) => {
+export const {{contextProviderCase context}} = (props: any) => {
 
     const {{contextProviderVarCase context}} = useMemo<{{contextCase context}}>(() => {
         return {
