@@ -13,6 +13,7 @@ React Code Creator supports creating the following types of React files:
 * Includes `css` and test `spec` files
 * Redux reducers
 * Actions
+* Storybook stories
 
 ## Install
 `npm install react-code-creator --save-dev`
@@ -33,6 +34,7 @@ useTypescript: # Default: false
 generateCss: # Default: true
 generateTests: # Default: true
 generateInterfaces: # Default: false
+generateStories: # Default: false
 cssExtension: # Default: "css"
 testExtension: # Default: "spec"
 root: # Default: "./src"
@@ -51,6 +53,7 @@ useSemicolons: # Default true
 |generateCss|Whether to generate css files when creating components|`true` or `false`|`true`|
 |generateTests|Whether to generate test spec files when creating components and services|`true` or `false`|`true`|
 |generateInterfaces|Whether to generate interfaces when creating services|`true` or `false`|`false`|
+|generateStories|Whether to generate Storybook stories when creating components|`true` or `false`|`false`|
 |cssExtension|Define the type of css file to generate|`"css"`, `"scss"`, `"less"`, `"sass"`|`"css"`|
 |testExtension|The file extension for test spec files|`"spec"` or `"test"`|`"spec"`|
 |root|The root directory for your source code (where React Code Creator will place the generated files)|any filepath string|`"./src"`|

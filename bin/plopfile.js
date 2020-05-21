@@ -19,6 +19,7 @@ const useTypescript = config.useTypescript ? true : false
 const generateCss = config.generateCss ? true : false
 const generateTests = config.generateTests ? true : false
 const generateInterfaces = config.generateInterfaces ? true : false
+const generateStories = config.generateStories ? true : false
 const fileExt = useTypescript ? 'ts' : 'js'
 const reactExt = useTypescript ? 'tsx' : 'jsx'
 const cssExt = config.cssExtension ? config.cssExtension : 'css'
@@ -211,6 +212,17 @@ module.exports = function (plop) {
                         return "Skipping test spec file generation because generateTests is disabled"
                     }
                 }
+            },
+            {
+                type: 'add',
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.story.${reactExt}`,
+                data: { useSemicolons },
+                templateFile: 'templates/story.hbs',
+                skip: function() {
+                    if (!generateStories) {
+                        return "Skipping Storybook story generation because generateStories is disabled"
+                    }
+                }
             }
         ]
     })
@@ -248,6 +260,17 @@ module.exports = function (plop) {
                 skip: function() {
                     if (!generateTests) {
                         return "Skipping test spec file generation because generateTests is disabled"
+                    }
+                }
+            },
+            {
+                type: 'add',
+                path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.story.${reactExt}`,
+                data: { useSemicolons },
+                templateFile: 'templates/story.hbs',
+                skip: function() {
+                    if (!generateStories) {
+                        return "Skipping Storybook story generation because generateStories is disabled"
                     }
                 }
             }
