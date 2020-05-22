@@ -15,11 +15,11 @@ catch(e) {
 config = yaml.safeLoad(config)
 
 const root = config.root ? config.root : './src'
-const useTypescript = config.useTypescript === !undefined ? config.useTypescript : false
-const generateCss = config.generateCss === !undefined ? config.generateCss : false
-const generateTests = config.generateTests  === !undefined? config.generateTests : false
-const generateInterfaces = config.generateInterfaces === !undefined ? config.generateInterfaces : false
-const generateStories  = config.generateStories === !undefined ? config.generateStories : false
+const useTypescript = config.useTypescript !== undefined ? config.useTypescript : false
+const generateCss = config.generateCss !== undefined ? config.generateCss : false
+const generateTests = config.generateTests  !== undefined? config.generateTests : false
+const generateInterfaces = config.generateInterfaces !== undefined ? config.generateInterfaces : false
+const generateStories = config.generateStories !== undefined ? config.generateStories : false
 const fileExt = useTypescript ? 'ts' : 'js'
 const reactExt = useTypescript ? 'tsx' : 'jsx'
 const cssExt = config.cssExtension ? config.cssExtension : 'css'
@@ -29,7 +29,7 @@ const modelPath = config.modelPath ? config.modelPath : 'models'
 const servicePath = config.servicePath ? config.servicePath : 'services'
 const contextPath = config.contextPath ? config.contextPath : 'contexts'
 const reduxPath = config.reduxPath ? config.reduxPath : 'redux'
-const useSemicolons = config.useSemicolons === !undefined ? config.useSemicolons : true
+const useSemicolons = config.useSemicolons !== undefined ? config.useSemicolons : true
 
 let fileCase = 'camelCase'
 let pathCase = 'camelCase'
