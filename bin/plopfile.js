@@ -20,6 +20,8 @@ const generateCss = config.generateCss !== undefined ? config.generateCss : fals
 const generateTests = config.generateTests  !== undefined? config.generateTests : false
 const generateInterfaces = config.generateInterfaces !== undefined ? config.generateInterfaces : false
 const generateStories = config.generateStories !== undefined ? config.generateStories : false
+const generatePropTypes = config.generatePropTypes !== undefined ? config.generatePropTypes : false
+const generateTypescriptProps = config.generateTypescriptProps !== undefined ? config.generateTypescriptProps : false
 const fileExt = useTypescript ? 'ts' : 'js'
 const reactExt = useTypescript ? 'tsx' : 'jsx'
 const cssExt = config.cssExtension ? config.cssExtension : 'css'
