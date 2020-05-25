@@ -110,3 +110,6 @@ For example:
 
 ### Avoid frequently changing the config
 React Code Creator relies on regex patterns to track and modify some generated files. Avoid changing the config parameters (such as file casing patterns, directories, or enabling/disabling typescript) to avoid errors related to locating previously generated files.
+
+## License
+You may use React Code Creator under the [GPLv3 license](https://github.com/dnllowe/react-code-creator/blob/master/LICENSE)

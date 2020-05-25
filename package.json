@@ -2,6 +2,7 @@
   "name": "react-code-creator",
   "version": "0.3.0",
   "author": "Daniel L. Lowe",
+  "license": "GPL-3.0",
   "description": "A lightweight tool to create boilerplate code for common React files",
   "repository": "https://github.com/dnllowe/react-code-creator",
   "keywords": [
