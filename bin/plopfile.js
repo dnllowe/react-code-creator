@@ -20,6 +20,8 @@ const generateCss = config.generateCss !== undefined ? config.generateCss : fals
 const generateTests = config.generateTests  !== undefined? config.generateTests : false
 const generateInterfaces = config.generateInterfaces !== undefined ? config.generateInterfaces : false
 const generateStories = config.generateStories !== undefined ? config.generateStories : false
+const generatePropTypes = config.generatePropTypes !== undefined ? config.generatePropTypes : false
+const generateTypescriptProps = config.generateTypescriptProps !== undefined ? (config.generateTypescriptProps && useTypescript) : false
 const fileExt = useTypescript ? 'ts' : 'js'
 const reactExt = useTypescript ? 'tsx' : 'jsx'
 const cssExt = config.cssExtension ? config.cssExtension : 'css'
@@ -177,6 +179,22 @@ module.exports = function (plop) {
         return plop.getHelper(varCase)(reducerText)
     })
 
+    plop.setHelper('ifCond', function (v1, operator, v2, options) {
+        switch (operator) {
+            case '==':return (v1 == v2) ? options.fn(this) : options.inverse(this);
+            case '===':return (v1 === v2) ? options.fn(this) : options.inverse(this);
+            case '!=':return (v1 != v2) ? options.fn(this) : options.inverse(this);
+            case '!==':return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+            case '<':return (v1 < v2) ? options.fn(this) : options.inverse(this);
+            case '<=':return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+            case '>':return (v1 > v2) ? options.fn(this) : options.inverse(this);
+            case '>=':return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+            case '&&':return (v1 && v2) ? options.fn(this) : options.inverse(this);
+            case '||':return (v1 || v2) ? options.fn(this) : options.inverse(this);
+            default:return options.inverse(this);
+        }
+    })
+
     plop.setGenerator('class-component', {
         description: 'Create a class component / view',
         prompts: [
@@ -190,7 +208,7 @@ module.exports = function (plop) {
             {
                 type: 'add',
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${reactExt}`,
-                data: { cssExtension: cssExt, generateCss, useSemicolons },
+                data: { cssExtension: cssExt, generateCss, useSemicolons, generatePropTypes, generateTypescriptProps, useTypescript },
                 templateFile: 'templates/class-component.hbs'
             },
             {
@@ -239,7 +257,7 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'add',
-                data: { cssExtension: cssExt, generateCss, useSemicolons },
+                data: { cssExtension: cssExt, generateCss, useSemicolons, generatePropTypes, generateTypescriptProps, useTypescript },
                 path: `${root}/${viewPath}/{{${pathCase} component}}/{{${fileCase} component}}.${reactExt}`,
                 templateFile: 'templates/component.hbs'
             },

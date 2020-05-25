@@ -35,6 +35,8 @@ generateCss: # Default: true
 generateTests: # Default: true
 generateInterfaces: # Default: false
 generateStories: # Default: false
+generatePropTypes: false # true or false. Default is false
+generateTypescriptProps: false # true or false. Default is false
 cssExtension: # Default: "css"
 testExtension: # Default: "spec"
 root: # Default: "./src"
@@ -54,6 +56,8 @@ useSemicolons: # Default true
 |generateTests|Whether to generate test spec files when creating components and services|`true` or `false`|`true`|
 |generateInterfaces|Whether to generate interfaces when creating services|`true` or `false`|`false`|
 |generateStories|Whether to generate Storybook stories when creating components|`true` or `false`|`false`|
+|generatePropTypes|Whether to generate React.PropTypes when creating components|`true` or `false`|`false`|
+|generateTypescriptProps|Whether to generate Typescript props when creating components|`true` or `false`|`false`|
 |cssExtension|Define the type of css file to generate|`"css"`, `"scss"`, `"less"`, `"sass"`|`"css"`|
 |testExtension|The file extension for test spec files|`"spec"` or `"test"`|`"spec"`|
 |root|The root directory for your source code (where React Code Creator will place the generated files)|any filepath string|`"./src"`|
@@ -106,3 +110,6 @@ For example:
 
 ### Avoid frequently changing the config
 React Code Creator relies on regex patterns to track and modify some generated files. Avoid changing the config parameters (such as file casing patterns, directories, or enabling/disabling typescript) to avoid errors related to locating previously generated files.
+
+## License
+You may use React Code Creator under the [GPLv3 license](https://github.com/dnllowe/react-code-creator/blob/master/LICENSE)

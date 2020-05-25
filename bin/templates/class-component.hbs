@@ -1,10 +1,23 @@
 import React from 'react'{{#if useSemicolons}};{{/if}}
+{{#if generatePropTypes}}
+import PropTypes from 'prop-types'{{#if useSemicolons}};{{/if}}
+{{/if}}
 {{#if generateCss}}
 import './{{fileCase component}}.{{cssExtension}}'{{#if useSemicolons}};{{/if}}
 {{/if}}
+{{#if generateTypescriptProps}}
 
-export class {{classCase component}} extends React.Component {
-    constructor(props) {
+export type {{classCase component}}State = {}{{#if useSemicolons}};{{/if}}
+
+export type {{classCase component}}Props = {}{{#if useSemicolons}};{{/if}}
+{{/if}}
+
+export class {{classCase component}} extends React.Component{{#if generateTypescriptProps}}<{{classCase component}}Props, {{classCase component}}State>{{/if}} {
+    {{#ifCond generatePropTypes '&&' useTypescript}}
+    public static propTypes = {}{{#if useSemicolons}};{{/if}}
+
+    {{/ifCond}}
+    constructor(props{{#if generateTypescriptProps}}: {{classCase component}}Props{{/if}}) {
         super(props){{#if useSemicolons}};{{/if}}
     }
 
@@ -14,5 +27,11 @@ export class {{classCase component}} extends React.Component {
         ){{#if useSemicolons}};{{/if}}
     }
 }
+{{#if generatePropTypes}}
+{{#unless useTypescript}}
+
+{{classCase component}}.propTypes = {}{{#if useSemicolons}};{{/if}}
+{{/unless}}
+{{/if}}
 
 export default {{classCase component}}{{#if useSemicolons}};{{/if}}
