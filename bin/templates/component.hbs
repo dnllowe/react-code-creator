@@ -1,12 +1,23 @@
 import React from 'react'{{#if useSemicolons}};{{/if}}
+{{#if generatePropTypes}}
+import PropTypes from 'prop-types'{{#if useSemicolons}};{{/if}}
+{{/if}}
 {{#if generateCss}}
 import './{{fileCase component}}.{{cssExtension}}'{{#if useSemicolons}};{{/if}}
 {{/if}}
+{{#if generateTypescriptProps}}
 
-export const {{classCase component}} = () => {
+export type {{classCase component}}Props = {}{{#if useSemicolons}};{{/if}}
+{{/if}}
+
+export const {{classCase component}}{{#if generateTypescriptProps}}: React.FC<{{classCase component}}Props>{{/if}} = (props{{#if generateTypescriptProps}}: {{classCase component}}Props{{/if}}) => {
     return (
         <div>Hello {{classCase component}}!</div>
     ){{#if useSemicolons}};{{/if}}
 }
+{{#if generatePropTypes}}
+
+{{classCase component}}.propTypes = {}{{#if useSemicolons}};{{/if}}
+{{/if}}
 
 export default {{classCase component}}{{#if useSemicolons}};{{/if}}
