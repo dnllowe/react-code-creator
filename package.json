@@ -1,6 +1,6 @@
 {
   "name": "react-code-creator",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "Daniel L. Lowe",
   "license": "MIT",
   "description": "A lightweight tool to create boilerplate code for common React files",
